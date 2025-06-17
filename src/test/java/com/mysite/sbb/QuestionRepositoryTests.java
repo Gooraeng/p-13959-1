@@ -66,7 +66,7 @@ class QuestionRepositoryTests {
 	@Test
 	@DisplayName("수정")
 	@Transactional
-	void t0() {
+	void t6() {
 		Question question = questionRepository.findById(1).get();
 		assertThat(question).isNotNull();
 
@@ -75,5 +75,16 @@ class QuestionRepositoryTests {
 
 		Question foundQuestion = questionRepository.findBySubject("수정된 제목").get();
 		assertThat(foundQuestion).isNotNull();
+	}
+
+	@Test
+	@DisplayName("삭제")
+	@Transactional
+	void t7() {
+		assertThat(questionRepository.count()).isEqualTo(2);
+		Question question = this.questionRepository.findById(1).get();
+		questionRepository.delete(question);
+
+		assertThat(questionRepository.count()).isEqualTo(1);
 	}
 }
