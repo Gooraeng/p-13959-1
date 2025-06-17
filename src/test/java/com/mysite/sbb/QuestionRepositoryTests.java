@@ -1,0 +1,53 @@
+package com.mysite.sbb;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest
+@ActiveProfiles("test")
+class QuestionRepositoryTests {
+
+	@Autowired
+	private QuestionRepository questionRepository;
+
+	@Test
+	@DisplayName("findAll")
+	void testFindAll() {
+		List<Question> questions = questionRepository.findAll();
+		assertThat(questions).hasSize(2);
+
+		Question q = questions.get(0);
+		assertThat(q.getSubject()).isEqualTo("sbb가 무엇인가요?");
+	}
+
+	@Test
+	@DisplayName("findById test")
+	void t2() {
+		Question question = questionRepository.findById(1).get();
+		assertThat(question.getSubject()).isEqualTo("sbb가 무엇인가요?");
+	}
+
+	@Test
+	@DisplayName("findBySubject test")
+	void t3() {
+		Question question = questionRepository.findBySubject("sbb가 무엇인가요?").get();
+
+		assertThat(question.getId()).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("findBySubject test")
+	void t4() {
+		Question question = questionRepository.findBySubjectAndContent(
+				"sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.").get();
+
+		assertThat(question.getId()).isEqualTo(1);
+	}
+}
