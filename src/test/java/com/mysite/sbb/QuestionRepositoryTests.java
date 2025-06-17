@@ -19,7 +19,7 @@ class QuestionRepositoryTests {
 
 	@Test
 	@DisplayName("findAll")
-	void testFindAll() {
+	void t1() {
 		List<Question> questions = questionRepository.findAll();
 		assertThat(questions).hasSize(2);
 
@@ -60,5 +60,18 @@ class QuestionRepositoryTests {
 
 		Question question = questions.get(0);
 		assertThat(question.getSubject()).isEqualTo("sbb가 무엇인가요?");
+	}
+
+	@Test
+	@DisplayName("수정")
+	void t0() { // 이러면 오류가 발생 (테스트가 함수의 이름 순으로 실행됨)
+		Question question = questionRepository.findById(1).get();
+		assertThat(question).isNotNull();
+
+		question.setSubject("수정된 제목");
+		questionRepository.save(question);
+
+		Question foundQuestion = questionRepository.findBySubject("수정된 제목").get();
+		assertThat(foundQuestion).isNotNull();
 	}
 }
