@@ -1,5 +1,6 @@
 package com.mysite.sbb;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,8 @@ class QuestionRepositoryTests {
 
 	@Test
 	@DisplayName("수정")
-	void t0() { // 이러면 오류가 발생 (테스트가 함수의 이름 순으로 실행됨)
+	@Transactional
+	void t0() {
 		Question question = questionRepository.findById(1).get();
 		assertThat(question).isNotNull();
 
