@@ -5,19 +5,12 @@
     <title>질문 목록</title>
 </head>
 <body>
-<h1>이름 : [[${name}]]</h1>
-
-<h1>나이들</h1>
+<h1>질문 목록</h1>
 <ul>
-    <li th:each="age : ${ages}">
-        [[${age}]]
+    <li th:each="question : ${questionList}">
+        <span th:text="${question.id}"></span>
+        <span th:text="${question.subject}"></span>
     </li>
-</ul>
-
-<h1>질문목록</h1>
-<ul>
-    <li>1 / 질문 1</li>
-    <li>2 / 질문 2</li>
 </ul>
 </body>
 </html>

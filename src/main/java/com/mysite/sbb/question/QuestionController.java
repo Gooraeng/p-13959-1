@@ -5,8 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
-
 @Controller
 @RequiredArgsConstructor
 public class QuestionController {
@@ -14,8 +12,7 @@ public class QuestionController {
 
     @GetMapping("/question/list")
     public String list(Model model) {
-        model.addAttribute("name", "paul");
-        model.addAttribute("ages", List.of(10, 20, 30, 40, 50));
+        model.addAttribute("questionList", questionRepository.findAll());
 
         return "question_list";
     }
