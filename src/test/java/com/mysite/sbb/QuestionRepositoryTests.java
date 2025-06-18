@@ -99,11 +99,29 @@ class QuestionRepositoryTests {
 		Question question = questionRepository.findById(2).get();
 		assertThat(question).isNotNull();
 
-		Answer a = new Answer();
-		a.setContent("네 자동으로 생성됩니다.");
-		a.setQuestion(question);  // 어떤 질문의 답변인지 알기위해서 Question 객체가 필요하다.
-		a.setCreateDate(LocalDateTime.now());
+		Answer answer = new Answer();
+		answer.setContent("네 자동으로 생성됩니다.");
+		answer.setQuestion(question);  // 어떤 질문의 답변인지 알기위해서 Question 객체가 필요하다.
+		answer.setCreateDate(LocalDateTime.now());
 
-		answerRepository.save(a);
+		answerRepository.save(answer);
+	}
+
+	@Test
+	@DisplayName("답변 생성 by oneToMany")
+	@Transactional
+	void t9() {
+		Question question = questionRepository.findById(2).get();
+
+		int beforeCount = question.getAnswers().size();
+
+		Answer newAnswer = question.addAnswer("네 자동으로 생성됩니다.");
+
+		// 트랜잭션이 종료된 이후에 DB에 반영되기 때문에 현재는 일단 0으로 설정된다.
+		assertThat(newAnswer.getId()).isEqualTo(0);
+
+		int afterCount = question.getAnswers().size();
+
+		assertThat(afterCount).isEqualTo(beforeCount + 1);
 	}
 }

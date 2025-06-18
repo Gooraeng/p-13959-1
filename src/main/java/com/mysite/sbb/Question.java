@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,6 +27,16 @@ public class Question {
     // 변수명 매핑,
     // 그리고 해당 질문에 대한 답변들을 삭제함
     // 근데 보통 칼럼에는 리스트를 받지는 않기 때문에 실제로 테이블에 생성되지 않음.
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<Answer> answers;
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Answer> answers = new ArrayList<>();
+
+    public Answer addAnswer(String content) {
+        Answer answer = new Answer();
+        answer.setContent("네 자동으로 생성됩니다.");
+        answer.setCreateDate(LocalDateTime.now());
+        answer.setQuestion(this);  // 어떤 질문의 답변인지 알기위해서 Question 객체가 필요하다.
+        answers.add(answer);
+
+        return answer;
+    }
 }
