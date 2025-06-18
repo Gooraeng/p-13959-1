@@ -27,7 +27,11 @@ public class Question {
     // 변수명 매핑,
     // 그리고 해당 질문에 대한 답변들을 삭제함
     // 근데 보통 칼럼에는 리스트를 받지는 않기 때문에 실제로 테이블에 생성되지 않음.
-    @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(
+            mappedBy = "question",
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    )
     private List<Answer> answers = new ArrayList<>();
 
     public Answer addAnswer(String content) {

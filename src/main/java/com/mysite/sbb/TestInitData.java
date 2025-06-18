@@ -46,6 +46,8 @@ public class TestInitData {
         q2.setCreateDate(LocalDateTime.now());
         questionRepository.save(q2);  // 두번째 질문 저장
 
+        q2.addAnswer("네 자동으로 생성됩니다.");
+
         System.out.println("기본 데이터가 초기화되었습니다.");
     }
 }
