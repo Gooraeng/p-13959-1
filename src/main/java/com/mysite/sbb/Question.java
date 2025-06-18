@@ -29,7 +29,6 @@ public class Question {
     // 근데 보통 칼럼에는 리스트를 받지는 않기 때문에 실제로 테이블에 생성되지 않음.
     @OneToMany(
             mappedBy = "question",
-            fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
     )
     private List<Answer> answers = new ArrayList<>();
